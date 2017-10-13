@@ -1,0 +1,272 @@
+<section class="APIDoc container"><h2>API 接口说明文档<a href="/platform/downloadAPI?materialType=API_doc" class="btn btn-down pull-right api-down"><i class="glyphicon glyphicon-download-alt"></i>下载接口文档</a></h2><div class="documentation"><h2>1.&nbsp;接口设计约束</h2><h3>1.1&nbsp;识别服务说明</h3><p>目前提供的识别服务如下：</p><ul><li>身份证识别，输入身份证正反两面图像，输出身份证要素信息，包括姓名、性别、民族、出生年月、住址、公民身份号码、签发机关、有效期限；</li><li>银行卡识别，输入银行卡正面图像(含卡号的一面)，输出银行卡卡号和所属银行信息；</li><li>营业执照识别，输入1张营业执照，输出证照表面信息；&nbsp;</li><li>增值税发票识别，输入1张增值税发票，输出其表面信息；</li><li>财务报表识别，输入1张财务报表，输出表单的内容；</li></ul><p>目前提供的验证服务如下：</p><ul><li>人脸比对，输入2张含人脸的图像，输出两者的相似度；</li><li>人证合一，输入1含人脸图像和1张身份证图片，输出人脸和身份证图像的相似度</li><li>银行卡要素识别验证，输入1张银行卡图片和姓名、身份证号、手机号进行银行卡三要素、四要素验证</li></ul><h3>1.2&nbsp;接口设计原则</h3><ul><li>客户端调用采用post提交的方式。</li><li>调用方根据实际业务需求，调整参数调用相应的接口，并接收返回结果。</li></ul><h3>1.3&nbsp;接口清单列表</h3><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>序号</p></th><th><p>接口名称</p></th><th><p>接口调用方式</p></th><th><p>接口作用</p></th></tr></thead><tbody><tr><td><p>1.&nbsp;</p></td><td><p>图像识别验证接口</p><p>(输入文件类型的图像或输入图像的base64数据流)</p></td><td><p>http方式post请求提交</p></td><td><p>通过识别服务参数等信息，获取识别结果（JSON格式/XML格式）</p></td></tr><tr><td><p>2.&nbsp;</p></td><td><p>批量识别接口</p><p>（输入文件类型图像或者输入图像的base64数据流）</p></td><td><p>http方式post请求提交</p></td><td><p>通过识别服务参数等信息，获取识别结果（JSON格式/XML格式）</p></td></tr></tbody></table><h2>2.&nbsp;接口总体设计</h2><h3>2.1&nbsp;接口请求地址</h3><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>函数功能</p></th><th colspan="2"><p>传入待识别的图片，进行证照的要素识别和验证</p></th></tr></thead><tbody><tr><td rowspan="2"><p>接口原型</p></td><td><p>文件传参</p></td><td><p>http://r.micropattern.com/micropatternImageRecognition/serviceAlgForFile</p></td></tr><tr><td><p>Base64传参</p></td><td><p>http://r.micropattern.com/micropatternImageRecognition/serviceAlgForBase64</p></td></tr><tr><td><p>调用方式</p></td><td colspan="2"><p>http方式post请求提交</p></td></tr></tbody></table><h4>2.1.1&nbsp;服务类型对照表</h4><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>serviceType值</p></th><th><p>对应服务</p></th></tr></thead><tbody><tr><td><p>2</p></td><td><p>银行卡</p></td></tr><tr><td><p>3</p></td><td><p>身份证</p></td></tr><tr><td><p>4</p></td><td><p>营业执照</p></td></tr><tr><td><p>5</p></td><td><p>增值税</p></td></tr><tr><td><p>6</p></td><td><p>财务报表</p></td></tr><tr><td><p>7</p></td><td><p>人脸比对</p></td></tr><tr><td><p>8</p></td><td><p>人证合一</p></td></tr><tr><td><p>4001</p></td><td><p>银行卡增值服务</p></td></tr><tr><td><p>10</p></td><td><p>全文字识别</p></td></tr></tbody></table><h4>2.1.2&nbsp;银行卡</h4><p>上传一张银行卡图片（含卡号的一面），获取银行卡卡号和所属银行名称，此接口只支持单张图片识别。</p><h5>2.1.2.1&nbsp;请求参数</h5><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>字段名</p></th><th><p>字段含义</p></th><th><p>是否必需</p></th><th><p>说明</p></th></tr></thead><tbody><tr><td><p>apiKey</p></td><td><p>客户端的访问标识</p></td><td><p>Y</p></td><td><p>用户注册授权服务后，可以通过账号管理界面创建应用获取到</p></td></tr><tr><td><p>serviceType</p></td><td><p>服务类型</p></td><td><p>Y</p></td><td><p>详见“服务类型对照表”</p></td></tr><tr><td><p>responseType</p></td><td><p>反馈格式</p></td><td><p>Y</p></td><td><p>0-JSON、1-XML</p></td></tr><tr><td><p>imgName</p></td><td><p>图片文件名</p></td><td><p>Y</p></td><td></td></tr><tr><td><p>imgBase64</p></td><td><p>图像字节流</p></td><td><p>Y</p></td><td><p>base64编码的二进制图片数据。调用base64传参接口时需要，imgBase64和imageFile二选一。</p></td></tr><tr><td><p>imgFile</p></td><td><p>图像文件</p></td><td><p>Y</p></td><td><p>二进制文件，需要用post&nbsp;multipart/form-data的方式上传。调用文件传参接口时需要，imgBase64和imageFile二选一。</p></td></tr></tbody></table><h5>2.1.2.2&nbsp;返回数据定义</h5><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>节点(key)</p></th><th><p>级别</p></th><th><p>父节点</p></th><th><p>数据含义</p></th><th><p>备注</p></th></tr></thead><tbody><tr><td><p>mpRecognition</p></td><td><p>0</p></td><td><p>无</p></td><td></td><td></td></tr><tr><td><p>resCd</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>返回码</p></td><td></td></tr><tr><td><p>resMsg</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>返回消息</p></td><td></td></tr><tr><td><p>ocrCnt</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>识别要素个数</p></td><td></td></tr><tr><td><p>ocrInfoList</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td></td><td></td></tr><tr><td><p>ocrInfo</p></td><td><p>2</p></td><td><p>ocrInfoList</p></td><td></td><td></td></tr><tr><td><p>serviceType</p></td><td><p>3</p></td><td><p>ocrInfo</p></td><td><p>服务类型</p></td><td><p>详见“服务类型对照表”</p></td></tr><tr><td><p>ocrResult</p></td><td><p>3</p></td><td><p>ocrInfo</p></td><td><p>识别结果集</p></td><td></td></tr><tr><td><p>ucCardNum</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>银行卡卡号</p></td><td></td></tr><tr><td><p>ucBankName</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>银行名称</p></td><td></td></tr></tbody></table><h4>2.1.3&nbsp;身份证</h4><p>上传一张或两张（正反面）身份证图片，获取身份证信息。此接口最多只能上传两张图片，如需批量识别请调用批量识别接口</p><h5>2.1.3.1&nbsp;请求参数</h5><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>字段名</p></th><th><p>字段含义</p></th><th><p>是否必需</p></th><th><p>说明</p></th></tr></thead><tbody><tr><td><p>apiKey</p></td><td><p>客户端的访问标识</p></td><td><p>Y</p></td><td><p>用户注册授权服务后，可以通过账号管理界面创建应用获取到</p></td></tr><tr><td><p>serviceType</p></td><td><p>服务类型</p></td><td><p>Y</p></td><td><p>详见“服务类型对照表”</p></td></tr><tr><td><p>responseType</p></td><td><p>反馈格式</p></td><td><p>Y</p></td><td><p>0-JSON、1-XML</p></td></tr><tr><td><p>imgName</p></td><td rowspan="2"><p>图片文件名</p></td><td><p>Y</p></td><td><p>对应第一张图片</p></td></tr><tr><td><p>imgName_1</p></td><td><p>N</p></td><td><p>对应第二张图片</p></td></tr><tr><td><p>imgBase64</p></td><td rowspan="2"><p>&nbsp;</p><p>图像字节流</p></td><td><p>Y</p></td><td><p>base64编码的二进制图片数据。调用base64传参接口时需要，imgBase64和imageFile二选一。对应第一张图片</p></td></tr><tr><td><p>imgBase64_1</p></td><td><p>N</p></td><td><p>对应第二张图片</p></td></tr><tr><td><p>imgFile</p></td><td rowspan="2"><p>&nbsp;</p><p>图像文件</p></td><td><p>Y</p></td><td><p>二进制文件，需要用post&nbsp;multipart/form-data的方式上传。调用文件传参接口时需要，imgBase64和imageFile二选一。对应第一张图片</p></td></tr><tr><td><p>imgFile_1</p></td><td><p>N</p></td><td><p>对应第二张图片</p></td></tr></tbody></table><h5>2.1.3.2&nbsp;返回数据定义</h5><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>节点(key)</p></th><th><p>级别</p></th><th><p>父节点</p></th><th><p>数据含义</p></th><th><p>备注</p></th></tr></thead><tbody><tr><td><p>mpRecognition</p></td><td><p>0</p></td><td><p>无</p></td><td></td><td></td></tr><tr><td><p>resCd</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>返回码</p></td><td></td></tr><tr><td><p>resMsg</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>返回消息</p></td><td></td></tr><tr><td><p>ocrCnt</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>识别要素个数</p></td><td></td></tr><tr><td><p>ocrInfoList</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td></td><td></td></tr><tr><td><p>ocrInfo</p></td><td><p>2</p></td><td><p>ocrInfoList</p></td><td></td><td></td></tr><tr><td><p>serviceType</p></td><td><p>3</p></td><td><p>ocrInfo</p></td><td><p>服务类型</p></td><td><p>详见“服务类型对照表”</p></td></tr><tr><td><p>ocrResult</p></td><td><p>3</p></td><td><p>ocrInfo</p></td><td><p>识别结果集</p></td><td></td></tr><tr><td><p>ucName</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>姓名</p></td><td></td></tr><tr><td><p>ucSex</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>性别</p></td><td></td></tr><tr><td><p>ucNat</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>民族</p></td><td></td></tr><tr><td><p>ucBirth</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>出生年月</p></td><td></td></tr><tr><td><p>ucAddress</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>地址</p></td><td></td></tr><tr><td><p>ucNumber</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>公民身份号码</p></td><td></td></tr><tr><td><p>ucValidDate</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>有效期限</p></td><td></td></tr><tr><td><p>ucIssueUint</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>签发机关</p></td><td></td></tr><tr><td><p>isValid</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>是否过期</p></td><td><p>0-已过期，1-未过期</p></td></tr></tbody></table><h4>2.1.4&nbsp;营业执照</h4><p>上传一张营业执照图片，识别获取营业执照信息，此接口只支持单张营业执照图片识别</p><h5>2.1.4.1&nbsp;请求参数</h5><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>字段名</p></th><th><p>字段含义</p></th><th><p>是否必需</p></th><th><p>说明</p></th></tr></thead><tbody><tr><td><p>apiKey</p></td><td><p>客户端的访问标识</p></td><td><p>Y</p></td><td><p>用户注册授权服务后，可以通过账号管理界面创建应用获取到</p></td></tr><tr><td><p>serviceType</p></td><td><p>服务类型</p></td><td><p>Y</p></td><td><p>详见“服务类型对照表”</p></td></tr><tr><td><p>responseType</p></td><td><p>反馈格式</p></td><td><p>Y</p></td><td><p>0-JSON、1-XML</p></td></tr><tr><td><p>template</p></td><td><p>版面类型</p></td><td><p>Y</p></td><td><p>值：12002、12003、12004</p><p>12002-新版营业执照；12003-企业法人营业执照；12004-个体工商户营业执照</p></td></tr><tr><td><p>openField</p></td><td><p>定制识别域</p></td><td><p>N</p></td><td><p>值为英文域名。</p><p>目前针对营业执照可以定制显示识别域，类型是字符串，每个域后必须加英文逗号.例如：textMap.put("openField",&nbsp;"&nbsp;password,NO,date,codeAreaType,");域名称见“营业执照域名对照表”</p></td></tr><tr><td><p>imgName</p></td><td><p>图片文件名</p></td><td><p>Y</p></td><td></td></tr><tr><td><p>imgBase64</p></td><td><p>图像字节流</p></td><td><p>Y</p></td><td><p>base64编码的二进制图片数据。调用base64传参接口时需要，imgBase64和imageFile二选一。</p></td></tr><tr><td><p>imgFile</p></td><td><p>图像文件</p></td><td><p>Y</p></td><td><p>二进制文件，需要用post&nbsp;multipart/form-data的方式上传。调用文件传参接口时需要，imgBase64和imageFile二选一。</p></td></tr></tbody></table><h5>2.1.4.2&nbsp;返回数据定义</h5><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>节点(key)</p></th><th><p>级别</p></th><th><p>父节点</p></th><th><p>数据含义</p></th><th><p>备注</p></th></tr></thead><tbody><tr><td><p>mpRecognition</p></td><td><p>0</p></td><td><p>无</p></td><td></td><td></td></tr><tr><td><p>resCd</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>返回码</p></td><td></td></tr><tr><td><p>resMsg</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>返回消息</p></td><td></td></tr><tr><td><p>ocrCnt</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>识别要素个数</p></td><td></td></tr><tr><td><p>ocrInfoList</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td></td><td></td></tr><tr><td><p>ocrInfo</p></td><td><p>2</p></td><td><p>ocrInfoList</p></td><td></td><td></td></tr><tr><td><p>serviceType</p></td><td><p>3</p></td><td><p>ocrInfo</p></td><td><p>服务类型</p></td><td><p>详见“服务类型对照表”</p></td></tr><tr><td><p>ocrResult</p></td><td><p>3</p></td><td><p>ocrInfo</p></td><td><p>识别结果集</p></td><td></td></tr><tr><td><p>code</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>代码</p></td><td></td></tr><tr><td><p>validity</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>有效期</p></td><td></td></tr><tr><td><p>registrationNumber</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>注册号</p></td><td></td></tr><tr><td><p>businessLicenseName</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>名称</p></td><td></td></tr><tr><td><p>legalRepresentative</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>法定代表人</p></td><td></td></tr><tr><td><p>legalRepresentativeName</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>法定代表人姓名</p></td><td></td></tr><tr><td><p>registeredCapital</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>注册资本</p></td><td></td></tr><tr><td><p>dateOfEstablishment</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>成立日期</p></td><td></td></tr><tr><td><p>businessLicenseType</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>类型</p></td><td></td></tr><tr><td><p>busnissTerm</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>营业期限</p></td><td></td></tr><tr><td><p>serialNumber</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>编号</p></td><td></td></tr><tr><td><p>OrganizationCodeCertificate</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>组织机构代码证号</p></td><td></td></tr><tr><td><p>typeSize</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>字号</p></td><td></td></tr><tr><td><p>typeSizeName</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>字号名称</p></td><td></td></tr><tr><td><p>PermitNumber</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>核准号</p></td><td></td></tr><tr><td><p>proprietorName</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>经营者姓名</p></td><td></td></tr><tr><td><p>ScopeOfOperators</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>经营者范围</p></td><td></td></tr><tr><td><p>domicile</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>住所</p></td><td></td></tr><tr><td><p>address</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>地址</p></td><td></td></tr><tr><td><p>companyType</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>公司类型</p></td><td></td></tr><tr><td><p>paiclupCapital</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>实收资本</p></td><td></td></tr><tr><td><p>templateType</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>版面类型</p></td><td></td></tr><tr><td><p>socialCreditCode&nbsp;</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>统一社会信用代码</p></td><td></td></tr><tr><td><p>personInCharge</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>责任人</p></td><td></td></tr><tr><td><p>investor</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>投资人</p></td><td></td></tr><tr><td><p>principal</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>负责人</p></td><td></td></tr><tr><td><p>scope</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>经营范围</p></td><td></td></tr><tr><td><p>taxNumber</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>税务登记证号</p></td><td></td></tr></tbody></table><h5>2.1.4.3&nbsp;营业执照域名对照表</h5><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>版面</p></th><th><p>域</p></th></tr></thead><tbody><tr><td><p>新版营业执照</p></td><td><p>注册号，编号，组织机构代码证号，税务登记号，统一社会信用代码，名称，类型,主体类型，住所,营业场所,主要经营场所，法定代表人,投资人,负责人,执行事务合伙人，注册资本，成立日期，营业期限,合伙期限</p></td></tr><tr><td><p>企业法人营业执照</p></td><td><p>注册号，名称，法定代表人姓名，注册资本，实收资本</p></td></tr><tr><td><p>个体工商户营业执照</p></td><td><p>注册号，字号名称/名称，经营者姓名</p></td></tr></tbody></table><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>服务</p></th><th><p>域名</p></th><th><p>域名（英文）</p></th></tr></thead><tbody><tr><td rowspan="23"><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>营业执照</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p></td><td><p>注册号</p></td><td><p>registrationNumber</p></td></tr><tr><td><p>编号</p></td><td><p>serialNumber</p></td></tr><tr><td><p>统一社会信用代码</p></td><td><p>socialCreditCode</p></td></tr><tr><td><p>名称</p></td><td><p>businessLicenseName</p></td></tr><tr><td><p>类型</p></td><td><p>businessLicenseType</p></td></tr><tr><td><p>主体类型</p></td><td><p>mainType</p></td></tr><tr><td><p>法定代表人</p></td><td><p>legalRepresentativeName</p></td></tr><tr><td><p>投资人</p></td><td><p>investor</p></td></tr><tr><td><p>负责人</p></td><td><p>personInCharge</p></td></tr><tr><td><p>执行事务合伙人</p></td><td><p>managingPartner</p></td></tr><tr><td><p>注册资本</p></td><td><p>registeredCapital</p></td></tr><tr><td><p>成立日期</p></td><td><p>dateOfEstablishment</p></td></tr><tr><td><p>营业期限</p></td><td><p>busnissTerm</p></td></tr><tr><td><p>合伙期限</p></td><td><p>partnerTerm</p></td></tr><tr><td><p>实收资本</p></td><td><p>paidUpCapital</p></td></tr><tr><td><p>字号名称</p></td><td><p>typeName</p></td></tr><tr><td><p>经营者姓名</p></td><td><p>managerName</p></td></tr><tr><td><p>住所</p></td><td><p>address</p></td></tr><tr><td><p>营业场所</p></td><td><p>busnissPlace</p></td></tr><tr><td><p>主要经营场所</p></td><td><p>mainBusnissPlace</p></td></tr><tr><td><p>组织机构代码证号</p></td><td><p>rganizationCodeCertificate</p></td></tr><tr><td><p>税务登记证号</p></td><td><p>taxRegistryNumber</p></td></tr><tr><td><p>法定代表人姓名</p></td><td><p>legalRepresentativeName</p></td></tr></tbody></table><h4>2.1.5&nbsp;增值税</h4><p>上传一张增值税发票图片，获取发票信息，此接口只支持单张增值税发票图片识别</p><h5>2.1.5.1&nbsp;请求参数</h5><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>字段名</p></th><th><p>字段含义</p></th><th><p>是否必需</p></th><th><p>说明</p></th></tr></thead><tbody><tr><td><p>apiKey</p></td><td><p>客户端的访问标识</p></td><td><p>Y</p></td><td><p>用户注册授权服务后，可以通过账号管理界面创建应用获取到</p></td></tr><tr><td><p>serviceType</p></td><td><p>服务类型</p></td><td><p>Y</p></td><td><p>详见“服务类型对照表”</p></td></tr><tr><td><p>responseType</p></td><td><p>反馈格式</p></td><td><p>Y</p></td><td><p>0-JSON、1-XML</p></td></tr><tr><td><p>openField</p></td><td><p>定制识别域</p></td><td><p>N</p></td><td><p>值为英文域名。</p><p>目前针对增值税发票可以定制显示识别域，类型是字符串，每个域后必须加英文逗号.例如：textMap.put("openField",&nbsp;"&nbsp;password,NO,date,codeAreaType,");域名称见“增值税域名对照表”</p></td></tr><tr><td><p>imgName</p></td><td><p>图片文件名</p></td><td><p>Y</p></td><td></td></tr><tr><td><p>imgBase64</p></td><td><p>图像字节流</p></td><td><p>Y</p></td><td><p>base64编码的二进制图片数据。调用base64传参接口时需要，imgBase64和imageFile二选一。</p></td></tr><tr><td><p>imgFile</p></td><td><p>图像文件</p></td><td><p>Y</p></td><td><p>二进制文件，需要用post&nbsp;multipart/form-data的方式上传。调用文件传参接口时需要，imgBase64和imageFile二选一。</p></td></tr></tbody></table><h5>2.1.5.2&nbsp;返回数据定义</h5><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>节点(key)</p></th><th><p>级别</p></th><th><p>父节点</p></th><th><p>数据含义</p></th><th><p>备注</p></th></tr></thead><tbody><tr><td><p>mpRecognition</p></td><td><p>0</p></td><td><p>无</p></td><td></td><td></td></tr><tr><td><p>resCd</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>返回码</p></td><td></td></tr><tr><td><p>resMsg</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>返回消息</p></td><td></td></tr><tr><td><p>ocrCnt</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>识别要素个数</p></td><td></td></tr><tr><td><p>ocrInfoList</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td></td><td></td></tr><tr><td><p>ocrInfo</p></td><td><p>2</p></td><td><p>ocrInfoList</p></td><td></td><td></td></tr><tr><td><p>serviceType</p></td><td><p>3</p></td><td><p>ocrInfo</p></td><td><p>服务类型</p></td><td><p>详见“服务类型对照表”</p></td></tr><tr><td><p>ocrResult</p></td><td><p>3</p></td><td><p>ocrInfo</p></td><td><p>识别结果集</p></td><td></td></tr><tr><td><p>date</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>日期</p></td><td></td></tr><tr><td><p>invoiceCode</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>发票代码</p></td><td></td></tr><tr><td><p>invoiceNumber</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>NO</p></td><td></td></tr><tr><td><p>totalPrice</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>合计金额</p></td><td></td></tr><tr><td><p>taxTotalPrice</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>合计税额</p></td><td></td></tr><tr><td><p>buyerIdentificationNumber</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>购买方纳税人识别号</p></td><td></td></tr><tr><td><p>sellerIdentificationNumber</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>销售方纳税人识别号</p></td><td></td></tr><tr><td><p>password</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>密码区</p></td><td></td></tr><tr><td><p>totalPriceTaxLowercase</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>价税合计（小写）</p></td><td></td></tr><tr><td><p>buyerName</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>购买方名称</p></td><td></td></tr><tr><td><p>sellerName</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>销售方名称</p></td><td></td></tr><tr><td><p>invoiceArea</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>发票区域</p></td><td></td></tr><tr><td><p>invoiceType</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>发票种类</p></td><td></td></tr><tr><td><p>totalPriceTaxUppercase</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>价税合计（大写）</p></td><td></td></tr><tr><td><p>detail</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td></td><td></td></tr><tr><td><p>name</p></td><td><p>5</p></td><td><p>detail</p></td><td><p>名称</p></td><td></td></tr><tr><td><p>price</p></td><td><p>5</p></td><td><p>detail</p></td><td><p>金额</p></td><td></td></tr><tr><td><p>quantity</p></td><td><p>5</p></td><td><p>detail</p></td><td><p>数量</p></td><td></td></tr><tr><td><p>specificationsModels</p></td><td><p>5</p></td><td><p>detail</p></td><td><p>规格型号</p></td><td></td></tr><tr><td><p>taxAmount</p></td><td><p>5</p></td><td><p>detail</p></td><td><p>税额</p></td><td></td></tr><tr><td><p>taxRate</p></td><td><p>5</p></td><td><p>detail</p></td><td><p>税率</p></td><td></td></tr><tr><td><p>unit</p></td><td><p>5</p></td><td><p>detail</p></td><td><p>单位</p></td><td></td></tr><tr><td><p>unitPrice</p></td><td><p>5</p></td><td><p>detail</p></td><td><p>单价</p></td><td></td></tr></tbody></table><h5>2.1.5.3&nbsp;增值税域名对照表</h5><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>服务</p></th><th><p>域名</p></th><th><p>域名（英文）</p></th></tr></thead><tbody><tr><td rowspan="13"><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>增值税发票</p></td><td><p>NO</p></td><td><p>NO</p></td></tr><tr><td><p>开票日期</p></td><td><p>date</p></td></tr><tr><td><p>购买方纳税人识别号</p></td><td><p>buyerIdentificationNumber</p></td></tr><tr><td><p>密码区</p></td><td><p>password</p></td></tr><tr><td><p>价税合计(大写)</p></td><td><p>totalPriceTaxUppercase</p></td></tr><tr><td><p>价税合计(小写)</p></td><td><p>totalPriceTaxLowercase</p></td></tr><tr><td><p>代码区域种类</p></td><td><p>codeAreaType</p></td></tr><tr><td><p>销售方纳税人识别号</p></td><td><p>sellerIdentificationNumber</p></td></tr><tr><td><p>合计金额</p></td><td><p>totalAmount</p></td></tr><tr><td><p>合计税额</p></td><td><p>totalTax</p></td></tr><tr><td><p>购买方名称</p></td><td><p>purchaserName</p></td></tr><tr><td><p>销售方名称</p></td><td><p>sellerName</p></td></tr><tr><td><p>明细域</p></td><td><p>detailRegion</p></td></tr></tbody></table><h4>2.1.6&nbsp;财务报表</h4><p>上传一张财务表图片，获取信息，此接口只支持单张财务报表图片识别</p><h5>2.1.6.1&nbsp;请求参数</h5><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>字段名</p></th><th><p>字段含义</p></th><th><p>是否必需</p></th><th><p>说明</p></th></tr></thead><tbody><tr><td><p>apiKey</p></td><td><p>客户端的访问标识</p></td><td><p>Y</p></td><td><p>用户注册授权服务后，可以通过账号管理界面创建应用获取到</p></td></tr><tr><td><p>serviceType</p></td><td><p>服务类型</p></td><td><p>Y</p></td><td><p>详见“服务类型对照表”</p></td></tr><tr><td><p>responseType</p></td><td><p>反馈格式</p></td><td><p>Y</p></td><td><p>0-JSON、1-XML</p></td></tr><tr><td><p>imgName</p></td><td><p>图片文件名</p></td><td><p>Y</p></td><td></td></tr><tr><td><p>imgBase64</p></td><td><p>图像字节流</p></td><td><p>Y</p></td><td><p>base64编码的二进制图片数据。调用base64传参接口时需要，imgBase64和imageFile二选一。</p></td></tr><tr><td><p>imgFile</p></td><td><p>图像文件</p></td><td><p>Y</p></td><td><p>二进制文件，需要用post&nbsp;multipart/form-data的方式上传。调用文件传参接口时需要，imgBase64和imageFile二选一。</p></td></tr></tbody></table><h5>2.1.6.2&nbsp;返回数据定义</h5><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>节点(key)</p></th><th><p>级别</p></th><th><p>父节点</p></th><th><p>数据含义</p></th><th><p>备注</p></th></tr></thead><tbody><tr><td><p>mpRecognition</p></td><td><p>0</p></td><td><p>无</p></td><td></td><td></td></tr><tr><td><p>resCd</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>返回码</p></td><td></td></tr><tr><td><p>resMsg</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>返回消息</p></td><td></td></tr><tr><td><p>ocrCnt</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>识别要素个数</p></td><td></td></tr><tr><td><p>ocrInfoList</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td></td><td></td></tr><tr><td><p>ocrInfo</p></td><td><p>2</p></td><td><p>ocrInfoList</p></td><td></td><td></td></tr><tr><td><p>serviceType</p></td><td><p>3</p></td><td><p>ocrInfo</p></td><td><p>服务类型</p></td><td><p>详见”服务类型对照表”</p></td></tr><tr><td><p>ocrResult</p></td><td><p>3</p></td><td><p>ocrInfo</p></td><td><p>识别结果集</p></td><td></td></tr><tr><td><p>table</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td></td><td></td></tr><tr><td><p>tableRow</p></td><td><p>5</p></td><td><p>table</p></td><td></td><td></td></tr><tr><td><p>tableItem</p></td><td><p>6</p></td><td><p>tableRow</p></td><td></td><td></td></tr></tbody></table><h4>2.1.7&nbsp;人脸比对</h4><p>上传两张人脸图片，获取人脸相似度，必须上传两张图片</p><h5>2.1.7.1&nbsp;请求参数</h5><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>字段名</p></th><th><p>字段含义</p></th><th><p>是否必需</p></th><th><p>说明</p></th></tr></thead><tbody><tr><td><p>apiKey</p></td><td><p>客户端的访问标识</p></td><td><p>Y</p></td><td><p>用户注册授权服务后，可以通过账号管理界面创建应用获取到</p></td></tr><tr><td><p>serviceType</p></td><td><p>服务类型</p></td><td><p>Y</p></td><td><p>详见“服务类型对照表”</p></td></tr><tr><td><p>responseType</p></td><td><p>反馈格式</p></td><td><p>Y</p></td><td><p>0-JSON、1-XML</p></td></tr><tr><td><p>imgName</p></td><td rowspan="2"><p>图片文件名</p></td><td><p>Y</p></td><td><p>对应第一张图片</p></td></tr><tr><td><p>imgName_1</p></td><td><p>Y</p></td><td><p>对应第二张图片</p></td></tr><tr><td><p>imgBase64</p></td><td rowspan="2"><p>图像字节流</p></td><td><p>Y</p></td><td><p>base64编码的二进制图片数据。调用base64传参接口时需要，imgBase64和imageFile二选一。对应第一张图片</p></td></tr><tr><td><p>imgBase64_1</p></td><td><p>Y</p></td><td><p>对应第二张图片</p></td></tr><tr><td><p>imgFile</p></td><td rowspan="2"><p>图像文件</p></td><td><p>Y</p></td><td><p>二进制文件，需要用post&nbsp;multipart/form-data的方式上传。调用文件传参接口时需要，imgBase64和imageFile二选一。对应第一张图片</p></td></tr><tr><td><p>imgFile_1</p></td><td><p>Y</p></td><td><p>对应第二张图片</p></td></tr></tbody></table><h5>2.1.7.2&nbsp;返回数据定义</h5><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>节点(key)</p></th><th><p>级别</p></th><th><p>父节点</p></th><th><p>数据含义</p></th><th><p>备注</p></th></tr></thead><tbody><tr><td><p>mpRecognition</p></td><td><p>0</p></td><td><p>无</p></td><td></td><td></td></tr><tr><td><p>resCd</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>返回码</p></td><td></td></tr><tr><td><p>resMsg</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>返回消息</p></td><td></td></tr><tr><td><p>ocrCnt</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>识别要素个数</p></td><td></td></tr><tr><td><p>ocrInfoList</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td></td><td></td></tr><tr><td><p>ocrInfo</p></td><td><p>2</p></td><td><p>ocrInfoList</p></td><td></td><td></td></tr><tr><td><p>serviceType</p></td><td><p>3</p></td><td><p>ocrInfo</p></td><td><p>服务类型</p></td><td><p>服务类型，详见”服务类型对照表”</p></td></tr><tr><td><p>ocrResult</p></td><td><p>3</p></td><td><p>ocrInfo</p></td><td><p>识别结果集</p></td><td></td></tr><tr><td><p>ucMsg</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>识别结果（是否通过）</p></td><td><p>返回值暂时为空</p></td></tr><tr><td><p>ucScore</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>相似度</p></td><td></td></tr><tr><td><p>ucExplain</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>给出识别结果的说明</p></td><td><p>返回值暂时为空</p></td></tr></tbody></table><h4>2.1.8&nbsp;人证合一</h4><p>人证合一服务包含身份证识别，实名认证和人脸比对服务。</p><p>上传一张人脸图片和一张身份证图片，获取人脸和身份证图像的相似度。通过参数verifyType控制是否需要进行实名认证的联网核查。默认不进行联网核查</p><h5>2.1.8.1&nbsp;请求参数</h5><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>字段名</p></th><th><p>字段含义</p></th><th><p>是否必需</p></th><th><p>说明</p></th></tr></thead><tbody><tr><td><p>apiKey</p></td><td><p>客户端的访问标识</p></td><td><p>Y</p></td><td><p>用户注册授权服务后，可以通过账号管理界面创建应用获取到</p></td></tr><tr><td><p>serviceType</p></td><td><p>服务类型</p></td><td><p>Y</p></td><td><p>详见“服务类型对照表”</p></td></tr><tr><td><p>responseType</p></td><td><p>反馈格式</p></td><td><p>Y</p></td><td><p>0-JSON、1-XML</p></td></tr><tr><td><p>verifyType</p></td><td><p>联网核查标志</p></td><td><p>Y</p></td><td><p>"0"联网核查，"1"不联网，默认不联网</p></td></tr><tr><td><p>imgName</p></td><td rowspan="2"><p>图片文件名</p></td><td><p>Y</p></td><td><p>对应人脸图片</p></td></tr><tr><td><p>imgName_1</p></td><td><p>Y</p></td><td><p>对应身份证图片</p></td></tr><tr><td><p>imgBase64</p></td><td rowspan="2"><p>图像字节流</p></td><td><p>Y</p></td><td><p>base64编码的二进制图片数据。调用base64传参接口时需要，imgBase64和imageFile二选一。对应人脸图片</p></td></tr><tr><td><p>imgBase64_1</p></td><td><p>Y</p></td><td><p>对应身份证图片</p></td></tr><tr><td><p>imgFile</p></td><td rowspan="2"><p>图像文件</p></td><td><p>Y</p></td><td><p>二进制文件，需要用post&nbsp;multipart/form-data的方式上传。调用文件传参接口时需要，imgBase64和imageFile二选一。对应人脸图片</p></td></tr><tr><td><p>imgFile_1</p></td><td><p>Y</p></td><td><p>对应身份证图片</p></td></tr></tbody></table><h5>2.1.8.2&nbsp;返回数据定义</h5><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>节点(key)</p></th><th><p>级别</p></th><th><p>父节点</p></th><th><p>数据含义</p></th><th><p>备注</p></th></tr></thead><tbody><tr><td><p>mpRecognition</p></td><td><p>0</p></td><td><p>无</p></td><td></td><td></td></tr><tr><td><p>resCd</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>返回码</p></td><td></td></tr><tr><td><p>resMsg</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>返回消息</p></td><td></td></tr><tr><td><p>ocrCnt</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>识别要素个数</p></td><td></td></tr><tr><td><p>ocrInfoList</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td></td><td></td></tr><tr><td><p>ocrInfo</p></td><td><p>2</p></td><td><p>ocrInfoList</p></td><td></td><td></td></tr><tr><td><p>serviceType</p></td><td><p>3</p></td><td><p>ocrInfo</p></td><td><p>服务类型</p></td><td><p>详见”服务类型对照表”</p></td></tr><tr><td><p>ocrResult</p></td><td><p>3</p></td><td><p>ocrInfo</p></td><td><p>识别结果集</p></td><td></td></tr><tr><td><p>ucMsg</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>识别结果（是否通过）</p></td><td><p>返回值暂时为空</p></td></tr><tr><td><p>ucScore</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>相似度</p></td><td></td></tr><tr><td><p>ucExplain</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>给出识别结果的说明</p></td><td><p>返回值暂时为空</p></td></tr></tbody></table><h4>2.1.9&nbsp;银行卡增值服务</h4><p>银行卡增值服务包含银行卡识别和银行卡要素验证服务，其中银行卡要素分为以下几种：</p><p>银行卡三要素：银行卡图片、姓名、身份证号</p><p>银行卡四要素：银行卡图片、姓名、身份证号、手机号</p><p>根据需要上传一张银行卡，进行不同要素的识别验证。通过参数verifyType控制是否需要进行要素验证，默认不验证</p><h5>2.1.9.1&nbsp;请求参数</h5><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>字段名</p></th><th><p>字段含义</p></th><th><p>是否必需</p></th><th><p>说明</p></th></tr></thead><tbody><tr><td><p>apiKey</p></td><td><p>客户端的访问标识</p></td><td><p>Y</p></td><td><p>用户注册授权服务后，可以通过账号管理界面创建应用获取到</p></td></tr><tr><td><p>serviceType</p></td><td><p>服务类型</p></td><td><p>Y</p></td><td><p>详见“服务类型对照表”</p></td></tr><tr><td><p>responseType</p></td><td><p>反馈格式</p></td><td><p>Y</p></td><td><p>0-JSON、1-XML</p></td></tr><tr><td><p>verifyType</p></td><td><p>联网核查标志</p></td><td><p>Y</p></td><td><p>"0"联网核查，"1"不联网，默认不联网;如果传值为1或者空,则只做银行卡识别不做要素验证</p></td></tr><tr><td><p>name</p></td><td><p>姓名</p></td><td><p>N</p></td><td></td></tr><tr><td><p>idCardNum</p></td><td><p>身份证号</p></td><td><p>N</p></td><td></td></tr><tr><td><p>phone</p></td><td><p>电话号码</p></td><td><p>N</p></td><td></td></tr><tr><td><p>imgName</p></td><td><p>图片文件名</p></td><td><p>Y</p></td><td></td></tr><tr><td><p>imgBase64</p></td><td><p>图像字节流</p></td><td><p>Y</p></td><td><p>base64编码的二进制图片数据。调用base64传参接口时需要，imgBase64和imageFile二选一。</p></td></tr><tr><td><p>imgFile</p></td><td><p>图像文件</p></td><td><p>Y</p></td><td><p>二进制文件，需要用post&nbsp;multipart/form-data的方式上传。调用文件传参接口时需要，imgBase64和imageFile二选一。</p></td></tr></tbody></table><h5>2.1.9.2&nbsp;返回数据定义</h5><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>节点(key)</p></th><th><p>级别</p></th><th><p>父节点</p></th><th><p>数据含义</p></th><th><p>备注</p></th></tr></thead><tbody><tr><td><p>mpRecognition</p></td><td><p>0</p></td><td><p>无</p></td><td></td><td></td></tr><tr><td><p>resCd</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>返回码</p></td><td></td></tr><tr><td><p>resMsg</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>返回消息</p></td><td></td></tr><tr><td><p>ocrCnt</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>识别要素个数</p></td><td></td></tr><tr><td><p>ocrInfoList</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td></td><td></td></tr><tr><td><p>ocrInfo</p></td><td><p>2</p></td><td><p>ocrInfoList</p></td><td></td><td></td></tr><tr><td><p>serviceType</p></td><td><p>3</p></td><td><p>ocrInfo</p></td><td><p>服务类型</p></td><td><p>详见”服务类型对照表”</p></td></tr><tr><td><p>ocrResult</p></td><td><p>3</p></td><td><p>ocrInfo</p></td><td><p>识别结果集</p></td><td></td></tr><tr><td><p>ucCardNum</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>银行卡号</p></td><td></td></tr><tr><td><p>ucBankName</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>银行名称</p></td><td></td></tr><tr><td><p>result</p></td><td><p>4</p></td><td><p>ocrResult</p></td><td><p>验证结果</p></td><td><p>verifyType参数为0时有</p></td></tr></tbody></table><h5>2.1.9.3&nbsp;验证结果说明</h5><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>result</p></th><th><p>说明</p></th></tr></thead><tbody><tr><td><p>1</p></td><td><p>验证通过</p></td></tr><tr><td><p>-1001</p></td><td><p>验证不通过</p></td></tr><tr><td><p>-1002</p></td><td><p>不支持该银行卡验证</p></td></tr><tr><td><p>-1003</p></td><td><p>数据格式错误</p></td></tr><tr><td><p>-1004</p></td><td><p>要素验证接口调用失败</p></td></tr><tr><td><p>-1005</p></td><td><p>未开通银联无卡业务</p></td></tr><tr><td><p>-1006</p></td><td><p>支付卡已超过有效期</p></td></tr><tr><td><p>-1007</p></td><td><p>卡状态异常或没有此产品</p></td></tr><tr><td><p>-1008</p></td><td><p>不允许进行的交易</p></td></tr></tbody></table><h3>2.2&nbsp;批量识别接口</h3><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>函数功能</p></th><th colspan="2"><p>批量识别接口</p></th></tr></thead><tbody><tr><td rowspan="2"><p>接口原型</p></td><td><p>文件传参</p></td><td><p>http://r.micropattern.com/micropatternImageRecognition/batch/serviceForFile</p></td></tr><tr><td><p>Base64传参</p></td><td><p>http://r.micropattern.com/micropatternImageRecognition/batch/serviceForBase64</p></td></tr><tr><td><p>调用方式</p></td><td colspan="2"><p>http方式post请求提交，&nbsp;Content-Type&nbsp;为&nbsp;multipart/form-data</p></td></tr></tbody></table><h4>2.2.1&nbsp;请求参数说明表</h4><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>字段名</p></th><th><p>字段含义</p></th><th><p>是否必需</p></th><th><p>说明</p></th></tr></thead><tbody><tr><td><p>apiKey</p></td><td><p>客户端的访问标识</p></td><td><p>Y</p></td><td><p>用户注册后，可以通过账号管理界面创建应用获取到</p></td></tr><tr><td><p>serviceType</p></td><td><p>服务类型</p></td><td><p>Y</p></td><td><p>详见“服务类型对照表”，仅支持serviceType&nbsp;2到6</p></td></tr><tr><td><p>template</p></td><td><p>版面类型</p></td><td><p>N</p></td><td><p>值：12002、12003、12004</p><p>12002-新版营业执照；12003-企业法人营业执照；12004-个体工商户营业执照</p></td></tr><tr><td><p>openField</p><p>&nbsp;</p></td><td><p>定制识别域</p><p>&nbsp;</p></td><td><p>N</p></td><td><p>目前针对营业执照和增值税发票可以定制显示识别域，类型是字符串，每个域后必须加英文逗号.例如：textMap.put("openField",&nbsp;"&nbsp;password,NO,Date,</p><p>&nbsp;codeAreaType,");域名称见2.1.4.3和2.1.5.3</p></td></tr><tr><td><p>responseType</p></td><td><p>反馈格式</p></td><td><p>Y</p></td><td><p>0-JSON、1-XML</p></td></tr><tr><td><p>sequence</p></td><td><p>业务号</p></td><td><p>Y</p></td><td><p>保证唯一性，对应一笔识别业务</p></td></tr><tr><td><p>callbackUrl</p></td><td><p>回调地址</p></td><td><p>N</p></td><td><p>用户端回调地址</p></td></tr><tr><td><p>imgFile</p></td><td rowspan="2"><p>待识别图片</p><p>（文件传参）</p><p>&nbsp;</p></td><td><p>Y</p></td><td><p>一个或多个文件</p></td></tr><tr><td><p>imgFile_1</p><p>&nbsp;</p></td><td></td><td><p>人脸比对和人证合一必填，身份证选填，其他不填。</p><p>一个或多个文件</p></td></tr><tr><td><p>imgBase64</p><p>&nbsp;</p></td><td rowspan="2"><p>待识别图片</p><p>（Base64传参）</p><p>&nbsp;</p></td><td><p>Y</p></td><td><p>用英文逗号隔开多个值，或者传String数组</p></td></tr><tr><td><p>imgBase64_1</p><p>&nbsp;</p><p>&nbsp;</p></td><td></td><td><p>人脸比对和人证合一，身份证选填，其他不填。</p><p>用英文逗号隔开多个值，或者传String数组</p></td></tr></tbody></table><h4>2.2.2&nbsp;返回数据定义</h4><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>节点(key)</p></th><th><p>级别</p></th><th><p>父节点</p></th><th><p>数据含义</p></th><th><p>备注</p></th></tr></thead><tbody><tr><td><p>mpRecognition</p></td><td><p>0</p></td><td><p>无</p></td><td></td><td></td></tr><tr><td><p>resCd</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>返回码</p></td><td><p>仅代表批量调用是否成功</p></td></tr><tr><td><p>resMsg</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>返回消息</p></td><td><p>仅代表批量调用是否成功</p></td></tr><tr><td><p>sequence</p><p>&nbsp;</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>业务号</p><p>&nbsp;</p></td><td><p>用户传过来的唯一业务号，对应一笔识别业务</p></td></tr><tr><td><p>ocrInfoList</p><p>&nbsp;</p></td><td><p>1</p></td><td><p>mpRecognition</p></td><td><p>批量识别结果数组</p></td><td><p>批量调用成功时才有值</p><p>&nbsp;</p></td></tr><tr><td><p>ocrInfo</p><p>&nbsp;</p></td><td><p>2</p></td><td><p>ocrInfoList</p></td><td><p>单个识别结果</p></td><td><p>批量识别，ocrInfoList下有多个ocrInfo，顺序和传入图片顺序相同。</p></td></tr><tr><td><p>resCd</p><p>&nbsp;</p></td><td><p>3</p></td><td><p>ocrInfo</p></td><td><p>单个识别返回码</p></td><td><p>代表单个调用是否成功</p><p>&nbsp;</p></td></tr><tr><td><p>resMsg</p><p>&nbsp;</p></td><td><p>3</p></td><td><p>ocrInfo</p></td><td><p>单个识别返回消息</p></td><td><p>代表单个调用是否成功</p><p>&nbsp;</p></td></tr><tr><td><p>ocrCnt</p><p>&nbsp;</p></td><td><p>3</p></td><td><p>ocrInfo</p></td><td><p>单个识别要素个数</p></td><td></td></tr><tr><td><p>ocrResult</p></td><td><p>3</p></td><td><p>ocrInfo</p></td><td><p>识别结果集</p></td><td><p>详见2.1各服务返回结果</p></td></tr></tbody></table><h4>2.2.3&nbsp;callbackUrl说明</h4><p>批量识别单笔业务超过5次识别内容，会采用异步返回形式，我们会利用空闲时间去执行批量识别任务，识别完成后，我们会调用用户传过来的callbackUrl（回调地址），通过POST传参的方式，把识别结果返回给用户。</p><p>POST传参说明如下：</p><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>字段名</p></th><th><p>字段类型</p></th><th><p>说明</p></th></tr></thead><tbody><tr><td><p>result</p><p>&nbsp;</p></td><td><p>String</p></td><td><p>识别结果报文，会根据调用时设置的responseType返回相应格式的报文字符串</p></td></tr></tbody></table><h4>2.2.4&nbsp;批量识别获取识别结果接口</h4><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>函数功能</p></th><th><p>批量识别获取识别结果接口</p></th></tr></thead><tbody><tr><td><p>接口原型</p></td><td><p>http://r.micropattern.com/micropatternImageRecognition/batch/getResult</p></td></tr><tr><td><p>调用方式</p></td><td><p>http方式post或get请求提交</p></td></tr></tbody></table><h5>2.2.4.1&nbsp;请求参数说明表</h5><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>字段名</p></th><th><p>字段含义</p></th><th><p>是否必需</p></th><th><p>说明</p></th></tr></thead><tbody><tr><td><p>apiKey</p></td><td><p>客户端的访问标识</p></td><td><p>Y</p></td><td><p>用户注册后，可以通过账号管理界面创建应用获取到</p></td></tr><tr><td><p>sequence</p></td><td><p>业务号</p></td><td><p>Y</p></td><td><p>用户传过来的唯一业务号，对应一笔识别业务</p></td></tr></tbody></table><h5>2.2.4.2&nbsp;&nbsp;返回数据定义</h5><p>详见2.1.2~2.1.6</p><h2>3.&nbsp;接口请求返回码说明</h2><p>接口的请求返回码对照说明。</p><h3>3.1&nbsp;公共返回码</h3><table class="table table-bordered table-striped table-hover table-responsive"><thead><tr><th><p>resCd</p></th><th><p>resMsg</p></th></tr></thead><tbody><tr><td><p>00000</p></td><td><p>成功</p></td></tr><tr><td><p>00002</p></td><td><p>apiKey错误</p></td></tr><tr><td><p>00003</p></td><td><p>无此服务</p></td></tr><tr><td><p>00006</p></td><td><p>用户无此服务调用权限,请联系我们</p></td></tr><tr><td><p>00007</p></td><td><p>没有上传待识别的图像</p></td></tr><tr><td><p>00008</p></td><td><p>待识别的图像上传错误</p></td></tr><tr><td><p>00009</p></td><td><p>待识别的图像名称太长</p></td></tr><tr><td><p>00011</p></td><td><p>无识别结果</p></td></tr><tr><td><p>00012</p></td><td><p>账户余额不足，请充值</p></td></tr><tr><td><p>00013</p></td><td><p>未获取价格配置方案</p></td></tr><tr><td><p>00014</p></td><td><p>请求参数错误</p></td></tr><tr><td><p>00015</p></td><td><p>批量识别数量超过上限</p></td></tr><tr><td><p>00016</p></td><td><p>暂无结果返回</p></td></tr><tr><td><p>00020</p></td><td><p>识别引擎连接失败</p></td></tr><tr><td><p>00021</p></td><td><p>缺少图片名称</p></td></tr><tr><td><p>00022</p></td><td><p>缺少一张待识别图片</p></td></tr><tr><td><p>00023</p></td><td><p>上传的文件不是可识别的图片</p></td></tr><tr><td><p>00031</p></td><td><p>无银行卡要素识别权限</p></td></tr><tr><td><p>00040</p></td><td><p>网络连接失败</p></td></tr><tr><td><p>00041</p></td><td><p>上传图片不合格</p></td></tr><tr><td><p>00090</p></td><td><p>身份证图片无法识别</p></td></tr><tr><td><p>00091</p></td><td><p>无联网核查权限</p></td></tr><tr><td><p>00092</p></td><td><p>联网核查无结果</p></td></tr><tr><td><p>00093</p></td><td><p>认证引擎参数错误</p></td></tr><tr><td><p>00110</p></td><td><p>服务调用次数已达到上限</p></td></tr><tr><td><p>00111</p></td><td><p>apiKey未授权此服务</p></td></tr></tbody></table><h2>4.&nbsp;接口请求返回样例</h2><h3>4.1&nbsp;人脸比对</h3><p>JSON格式</p><pre><code>
+{
+    "mpRecognition":
+    {
+        "ocrCnt": "3",
+        "ocrInfoList":
+        {
+            "ocrInfo":
+            {
+                "ocrResult":
+                {
+                    "ucExplain": "",
+                    "ucMsg": "",
+                    "ucScore": "0.926161"
+                },
+                "serviceType": "7"
+            }
+        },
+        "resCd": "00000",
+        "resMsg": "成功"
+    }
+}
+        </code></pre><p>XML格式</p><pre><code>
+&lt;mpRecognition&gt;
+    &lt;resCd&gt;00000&lt;/resCd&gt;
+    &lt;resMsg&gt;成功&lt;/resMsg&gt;
+    &lt;ocrCnt&gt;3&lt;/ocrCnt&gt;
+    &lt;ocrInfoList&gt;
+        &lt;ocrInfo&gt;
+            &lt;serviceType&gt;7&lt;/serviceType&gt;
+            &lt;ocrResult&gt;
+                &lt;ucScore&gt;0.926161&lt;/ucScore&gt;
+                &lt;ucExplain&gt;&lt;/ucExplain&gt;
+                &lt;ucMsg&gt;&lt;/ucMsg&gt;
+                &lt;ucMsg&gt;&lt;/ucMsg&gt;
+                &lt;ucExplain&gt;&lt;/ucExplain&gt;
+            &lt;/ocrResult&gt;
+        &lt;/ocrInfo&gt;
+    &lt;/ocrInfoList&gt;
+&lt;/mpRecognition&gt;
+        </code></pre><h3>4.2&nbsp;银行卡</h3><p>JSON格式</p><pre><code>
+{
+    "mpRecognition":
+    {
+        "ocrCnt": "2",
+        "ocrInfoList":
+        {
+            "ocrInfo":
+            {
+                "ocrResult": [
+                {
+                    "ucBankName": "招商银行股份有限公司(308584000013)"
+                },
+                {
+                    "ucCardNum": "6214 8327 0555 XXXX"
+                }],
+                "serviceType": "2"
+            }
+        },
+        "resCd": "00000",
+        "resMsg": "成功"
+    }
+}
+        </code></pre><p>XML格式</p><pre><code>
+&lt;mpRecognition&gt;
+    &lt;resCd&gt;00000&lt;/resCd&gt;
+    &lt;resMsg&gt;成功&lt;/resMsg&gt;
+    &lt;ocrCnt&gt;2&lt;/ocrCnt&gt;
+    &lt;ocrInfoList&gt;
+        &lt;ocrInfo&gt;
+            &lt;serviceType&gt;2&lt;/serviceType&gt;
+            &lt;ocrResult&gt;
+                &lt;ucBankName&gt;招商银行股份有限公司(308584000013)&lt;/ucBankName&gt;
+                &lt;ucCardNum&gt;6214 8327 0555 XXXX&lt;/ucCardNum&gt;
+            &lt;/ocrResult&gt;
+        &lt;/ocrInfo&gt;
+    &lt;/ocrInfoList&gt;
+&lt;/mpRecognition&gt;
+        </code></pre><h3>4.3&nbsp;增值税发票</h3><p>JSON格式</p><pre><code>
+{
+    "mpRecognition":
+    {
+        "ocrCnt": "18",
+        "ocrInfoList":
+        {
+            "ocrInfo":
+            {
+                "ocrResult": [
+                {
+                    "invoiceNumber": "11440484"
+                },
+                {
+                    "date": "2016年07月31日"
+                },
+                {
+                    "detail": [
+                    {
+                        "name": "液晶电视",
+                        "price": "10811.96",
+                        "quantity": "11",
+                        "specificationsModels": "LCD一32F360A",
+                        "taxAmount": "1838.04",
+                        "taxRate": "17%",
+                        "unit": "件",
+                        "unitPrice": "982.90545455"
+                    },
+                    {
+                        "name": "液晶电视",
+                        "price": "6495.73",
+                        "quantity": "",
+                        "specificationsModels": "LCD一40F360A",
+                        "taxAmount": "1104.27",
+                        "taxRate": "17%",
+                        "unit": "件",
+                        "unitPrice": ""
+                    }]
+                }],
+                "serviceType": "5"
+            }
+        },
+        "resCd": "00000",
+        "resMsg": "成功"
+    }
+}
+        </code></pre><p>XML格式</p><pre><code>
+&lt;mpRecognition&gt;
+    &lt;resCd&gt;00000&lt;/resCd&gt;
+    &lt;resMsg&gt;成功&lt;/resMsg&gt;
+    &lt;ocrCnt&gt;18&lt;/ocrCnt&gt;
+    &lt;ocrInfoList&gt;
+        &lt;ocrInfo&gt;
+            &lt;serviceType&gt;5&lt;/serviceType&gt;
+            &lt;ocrResult&gt;
+                &lt;invoiceNumber&gt;11440484&lt;/invoiceNumber&gt;
+                &lt;date&gt;2016年07月31日&lt;/date&gt;
+                &lt;detail&gt;
+                    &lt;name&gt;液晶电视&lt;/name&gt;
+                    &lt;specificationsModels&gt;LCD一32F360A&lt;/specificationsModels&gt;
+                    &lt;unit&gt;件&lt;/unit&gt;
+                    &lt;quantity&gt;11&lt;/quantity&gt;
+                    &lt;unitPrice&gt;982.90545455&lt;/unitPrice&gt;
+                    &lt;price&gt;10811.96&lt;/price&gt;
+                    &lt;taxRate&gt;17%&lt;/taxRate&gt;
+                    &lt;taxAmount&gt;1838.04&lt;/taxAmount&gt;
+                &lt;/detail&gt;
+                &lt;detail&gt;
+                    &lt;name&gt;液晶电视&lt;/name&gt;
+                    &lt;specificationsModels&gt;LCD一40F360A&lt;/specificationsModels&gt;
+                    &lt;unit&gt;件&lt;/unit&gt;
+                    &lt;quantity&gt;&lt;/quantity&gt;
+                    &lt;unitPrice&gt;&lt;/unitPrice&gt;
+                    &lt;price&gt;6495.73&lt;/price&gt;
+                    &lt;taxRate&gt;17%&lt;/taxRate&gt;
+                    &lt;taxAmount&gt;1104.27&lt;/taxAmount&gt;
+                &lt;/detail&gt;
+            &lt;/ocrResult&gt;
+        &lt;/ocrInfo&gt;
+    &lt;/ocrInfoList&gt;
+&lt;/mpRecognition&gt;
+        </code></pre><h3>4.4&nbsp;财务报表</h3><p>JSON格式</p><pre><code>
+{
+    "mpRecognition":
+    {
+        "ocrCnt": "288",
+        "ocrInfoList":
+        {
+            "ocrInfo":
+            {
+                "ocrResult":
+                {
+                    "table":
+                    {
+                        "tableRow": [
+                        {
+                            "tableItem": [
+                            {
+                                "value": "资产"
+                            },
+                            {
+                                "value": "行次"
+                            },
+                            {
+                                "value": "年初数"
+                            },
+                            {
+                                "value": "期末数"
+                            },
+                            {
+                                "value": "负债及所有者权益"
+                            },
+                            {
+                                "value": "行次"
+                            },
+                            {
+                                "value": "年初数"
+                            },
+                            {
+                                "value": "期末数"
+                            }]
+                        },
+                        {
+                            "tableItem": [
+                            {
+                                "value": "资产总计"
+                            },
+                            {
+                                "value": "29"
+                            },
+                            {
+                                "value": "658163936.60"
+                            },
+                            {
+                                "value": "720363814.93"
+                            },
+                            {
+                                "value": "负债及所有者权益"
+                            },
+                            {
+                                "value": "57"
+                            },
+                            {
+                                "value": "658163936.60"
+                            },
+                            {
+                                "value": "720363814.93"
+                            }]
+                        }]
+                    }
+                },
+                "serviceType": "6"
+            }
+        },
+        "resCd": "00000",
+        "resMsg": "成功"
+    }
+}
+        </code></pre><p>XML格式</p><pre><code>
+&lt;mpRecognition&gt;
+    &lt;resCd&gt;00000&lt;/resCd&gt;
+    &lt;resMsg&gt;成功&lt;/resMsg&gt;
+    &lt;ocrCnt&gt;288&lt;/ocrCnt&gt;
+    &lt;ocrInfoList&gt;
+        &lt;ocrInfo&gt;
+            &lt;serviceType&gt;6&lt;/serviceType&gt;
+            &lt;ocrResult&gt;
+                &lt;table&gt;
+                    &lt;tableRow&gt;
+                        &lt;tableItem value="资产" /&gt;
+                        &lt;tableItem value="行次" /&gt;
+                        &lt;tableItem value="年初数" /&gt;
+                        &lt;tableItem value="期末数" /&gt;
+                        &lt;tableItem value="负债及所有者权益" /&gt;
+                        &lt;tableItem value="行次" /&gt;
+                        &lt;tableItem value="年初数" /&gt;
+                        &lt;tableItem value="期末数" /&gt;
+                    &lt;/tableRow&gt;
+                    &lt;tableRow&gt;
+                        &lt;tableItem value="资产总计" /&gt;
+                        &lt;tableItem value="29" /&gt;
+                        &lt;tableItem value="658163936.60" /&gt;
+                        &lt;tableItem value="720363814.93" /&gt;
+                        &lt;tableItem value="负债及所有者权益" /&gt;
+                        &lt;tableItem value="57" /&gt;
+                        &lt;tableItem value="658163936.60" /&gt;
+                        &lt;tableItem value="720363814.93" /&gt;
+                    &lt;/tableRow&gt;
+                &lt;/table&gt;
+            &lt;/ocrResult&gt;
+        &lt;/ocrInfo&gt;
+    &lt;/ocrInfoList&gt;
+&lt;/mpRecognition&gt;
+        </code></pre></div></section>

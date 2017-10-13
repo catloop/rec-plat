@@ -1,0 +1,1061 @@
+/*
+ * 算法演示
+ */
+
+@charset "UTF-8";
+
+
+
+/* 二级导航开始 */
+
+.tab-tits {
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+    background-color: #FFF;
+    z-index: 9;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.tab-tits.fixed {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.tab-tits .nav-tabs,
+.tab-tits .nav-tabs>li.active>a,
+.tab-tits .nav-tabs>li>a {
+    border: none;
+}
+
+.tab-tits .nav-tabs>li {
+    margin-bottom: 0;
+}
+
+.tab-tits .nav-tabs>li::after {
+    content: "";
+    position: absolute;
+    height: 3px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: transparent;
+}
+
+.tab-tits .nav>li>a:hover {
+    background-color: transparent;
+}
+
+.tab-tits .nav-tabs>li:hover::after,
+.tab-tits .nav-tabs>li.active::after,
+.tab-tits .nav-tabs:hover>li.active:hover::after {
+    background-color: #2277DA;
+    -webkit-transition: background-color .3s;
+    transition: background-color .3s;
+}
+
+.tab-tits .nav-tabs:hover>li.active::after {
+    background-color: transparent;
+    -webkit-transition: background-color .3s;
+    transition: background-color .3s;
+}
+
+.tab-tits .nav-tabs>li>a {
+    font-size: 14px;
+    line-height: 1;
+    padding: 24px 17px;
+    margin-right: 0;
+    color: #333;
+}
+
+.tab-tits .nav-tabs>li.active>a {
+    color: #2277DA;
+}
+
+.tab-tits .nav-tabs>li>a>.count-label {
+    font-size: 12px;
+    line-height: 10px;
+    height: 10px;
+    background-color: #f44336;
+    color: #fff;
+    border-radius: 1em;
+    padding: 2px 5px;
+}
+
+
+/* 二级导航结束 */
+
+
+/* 功能演示标题与描述开始 */
+
+.fn-tit {
+    margin-bottom: 38px;
+}
+
+.fn-tit h3 {
+    margin-top: 50px;
+    margin-bottom: 32px;
+}
+
+.fn-tit p {
+    font-size: 14px;
+    height: 20px;
+    margin-bottom: 0;
+}
+
+
+
+
+/* 功能演示标题与描述结束 */
+
+
+/* 单张与批量识别开始 */
+
+.mode {
+    margin-bottom: 30px;
+}
+
+
+
+/* 单张与批量识别结束 */
+
+
+/* 功能演示开始 */
+
+.tab-content {
+    margin-bottom: 40px;
+}
+
+.tab-content .tab-pane>div {
+    padding: 0 10px;
+}
+
+.tab-content .tab-pane {
+    position: relative;
+}
+
+.tab-content .thumb-list {
+    border: 1px solid #ccc;
+    padding: 4px;
+}
+
+.tab-content .thumb-list .tips {
+    position: absolute;
+    top: 50%;
+    margin-top: -7px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #aaa;
+}
+
+.tab-content .thumb-item {
+    width: 20%;
+    overflow: hidden;
+    height: 156px;
+    border: 2px solid transparent;
+    border-radius: 3px;
+    float: left;
+}
+
+.tab-content .thumb-item img {
+    width: 100%;
+}
+
+.tab-content .thumb-item img.file {
+    max-width: 100%;
+    width: auto;
+    max-height: 100%;
+    height: auto;
+    padding: 10%;
+}
+
+.tab-content .thumb-item.active {
+    border-color: #2277DA;
+}
+
+.tab-content .thumb-item.ative {
+    border-color: #2277DA;
+}
+
+.tab-content .main-img,
+.tab-content .result {
+    border: 1px solid #CCC;
+    overflow: auto;
+    height: 354px;
+}
+
+.tab-content .main-img {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+        justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+        align-items: center;
+}
+
+.tab-content .main-img img,
+.tab-content .main-img video {
+    max-width: 100%;
+    max-height: 100%;
+    /* margin: 0 auto; */
+}
+
+.tab-content .main-img .file {
+    width: 50%;
+    height: 100%;
+    margin: 0 auto;
+    padding: 10% 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+
+.tab-content .main-img .file img {
+    margin: 0 auto;
+}
+
+.tab-content .main-img .file .filename {
+    display: block;
+    text-align: center;
+    width: 100%;
+}
+
+.tab-content .main-img canvas {
+    width: 100%;
+    height: 100%;
+    background-color: #efefef;
+}
+
+.tab-content .result {
+    position: relative;
+}
+
+.tab-content .result .card span {
+    position: absolute;
+    font-size: 17px;
+    color: #2277da;
+}
+
+.tab-content .result .text {
+    margin: 10px;
+    /* overflow-y: auto; */
+    /* overflow-x: hidden; */
+    max-height: 85%;
+    font-size: 14px;
+    line-height: 20px;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+
+/* #batch .result .text {
+    overflow-x: auto;
+} */
+
+.tab-content .result .text ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+
+
+/* .tab-content .result .text td {
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+} */
+
+.tab-content .result .text .obj {
+    margin-left: 2em;
+}
+
+.tab-content .result .text>.obj>li>.obj,
+.tab-content .result .text>.arr>li>.obj {
+    margin-left: 0;
+}
+
+.tab-content .result .failed {
+    margin: 20px;
+}
+
+.tab-content .file-button {
+    position: relative;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.tab-content .file-button .btn {
+    display: inline-block;
+    width: 180px;
+    height: 40px;
+    line-height: 40px;
+    padding: 0;
+    margin: 0 10px;
+    background-color: #2277DA;
+    color: #FFF;
+    border-radius: 5px;
+    -webkit-transition: background-color .3s;
+    transition: background-color .3s
+}
+
+.tab-content .file-button button.config {
+    margin-bottom: 5px;
+}
+
+.tab-content .file-button .trans-input {
+    display: none;
+}
+
+.fieldConf .modal-body label {
+    margin: 6px 4px;
+}
+
+
+
+/* 人脸识别开始 */
+
+#face {
+    position: relative;
+}
+
+#face .simi {
+    /* display: none; */
+    position: absolute;
+    width: 144px;
+    height: 144px;
+    border-radius: 50%;
+    background-color: #E1E1EE;
+    border: 2px solid #2277DA;
+    left: 50%;
+    margin-left: -72px;
+    bottom: 36%;
+    padding: 40px 0;
+    text-align: center;
+}
+
+#face .simi span {
+    display: block;
+    line-height: 32px;
+    font-size: 22px;
+    color: #2277DA;
+}
+
+#face .thumb-list {
+    min-height: 88px;
+    position: relative;
+}
+
+#face .thumb-item {
+    height: 78px;
+}
+
+.thumb-item {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+        justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+        align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column nowrap;
+            flex-flow: column nowrap;
+}
+
+@media (min-width: 1200px) {
+    #face .main-img {
+        height: 385px;
+    }
+    .tab-content .col-xs-12 .thumb-list {
+        min-height: 156px;
+    }
+}
+
+@media (max-width: 1200px) {
+    #face .thumb-list {
+        min-height: 73px;
+    }
+    #face .thumb-item {
+        height: 63px;
+    }
+    #face .main-img {
+        height: 314px;
+    }
+    .tab-content .col-xs-12 .thumb-list {
+        min-height: 130px;
+    }
+}
+
+@media (max-width: 992px) {
+    #face .thumb-list {
+        min-height: 58px;
+    }
+    #face .thumb-item {
+        height: 48px;
+    }
+    #face .main-img {
+        height: 240px;
+    }
+    .tab-content .col-xs-12 .thumb-list {
+        min-height: 102px;
+    }
+    .tab-content .main-img,
+    .tab-content .result {
+        height: 258px;
+    }
+    #idCard .result .card {
+        zoom: .75;
+    }
+    #creditCard .result .card {
+        zoom: .75;
+    }
+}
+
+#faceUp1,
+#faceUp2 {
+    display: none;
+}
+
+#face .upload-bg {
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    right: 10px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, .5);
+    color: #fff;
+    line-height: 50px;
+    /* opacity: 0; */
+    -webkit-transition: opacity .3s;
+    transition: opacity .3s;
+    cursor: pointer;
+}
+
+
+
+
+/* #face .main-img:hover .upload-bg {
+    opacity: 1;
+    -webkit-transition: opacity .3s;
+    -moz-transition: opacity .3s;
+    transition: opacity .3s;
+} */
+
+#face .img-upload {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    width: 100%;
+    outline: none!important;
+    opacity: 0;
+    cursor: pointer;
+}
+
+#face .upload-bg i.add-img {
+    background: url('../images/demo/add-img.png') no-repeat center;
+    width: 22px;
+    height: 22px;
+    display: inline-block;
+    margin: 0 5px -6px 0;
+}
+
+
+
+
+/* 人脸识别结束 */
+
+
+/* 身份证与银行卡识别开始 */
+
+#idCard .main-img img,
+#creditCard .main-img img,
+#vat .main-img img {
+    margin: 0 auto;
+    padding: 18px;
+}
+
+#idCard .thumb-item,
+#creditCard .thumb-item,
+#vat .thumb-item,
+#finSta .thumb-item,
+#busLis .thumb-item {
+    border: 4px solid transparent;
+}
+
+#idCard .thumb-item.active,
+#creditCard .thumb-item.active,
+#vat .thumb-item.active,
+#finSta .thumb-item.active,
+#busLis .thumb-item.active {
+    border-color: #2277DA;
+}
+
+#finSta .text {
+    white-space: nowrap;
+    /* overflow: auto; */
+}
+
+#idCard .thumb-item,
+#creditCard .thumb-item {
+    border-radius: 8px;
+}
+
+#vat .result td:first-child,
+#busLis .result td:first-child {
+    white-space: nowrap;
+}
+
+#creditCard .result .card {
+    width: 451px;
+    height: 274px;
+    margin: 0 auto;
+    position: relative;
+    margin-top: 7%;
+}
+
+#idCard .result .card {
+    margin: 0 auto;
+    width: 457px;
+    height: 280px;
+    position: relative;
+    margin-top: 7%;
+}
+
+#idCard .result .card .back-face,
+#idCard .result .card .validate,
+#idCard .result .card .organ,
+#idCard .result .card.back .name,
+#idCard .result .card.back .gender,
+#idCard .result .card.back .birth,
+#idCard .result .card.back .address,
+#idCard .result .card.back .nation,
+#idCard .result .card.back .idnum,
+#idCard .result .card.back img {
+    display: none;
+}
+
+#idCard .result .card.back .back-face,
+#idCard .result .card.back .validate,
+#idCard .result .card.back .organ {
+    display: block;
+}
+
+#idCard .name,
+#idCard .gender,
+#idCard .birth,
+#idCard .address {
+    left: 92px
+}
+
+#idCard .name {
+    top: 42px;
+}
+
+#idCard .gender,
+#idCard .nation {
+    top: 74px;
+}
+
+#idCard .nation {
+    left: 190px;
+}
+
+#idCard .birth {
+    top: 108px;
+}
+
+#idCard .address {
+    top: 137px;
+    max-width: 13em;
+    line-height: 1.5em;
+}
+
+#idCard .idnum {
+    left: 180px;
+    top: 221px;
+}
+
+#idCard .organ {
+    left: 180px;
+    bottom: 64px;
+}
+
+#idCard .validate {
+    left: 180px;
+    bottom: 31px;
+}
+
+#creditCard .card-num {
+    top: 178px;
+    left: 110px;
+}
+
+#creditCard .card-name {
+    top: 215px;
+    left: 110px;
+}
+
+
+
+
+/* 身份证与银行卡识别结束 */
+
+
+/* 财务报表开始 */
+
+#finSta div>.full-screen,
+#batch .full-screen {
+    position: absolute;
+    bottom: 30px;
+    right: 40px;
+    z-index: 9;
+    width: 90px;
+    height: 90px;
+    border: none;
+    background-color: rgba(0, 0, 0, .5);
+    color: #fff;
+    border-radius: 3px;
+    font-size: 14px;
+    line-height: 1.5em;
+}
+
+#finSta div>.full-screen i,
+#batch .full-screen i {
+    font-size: 40px;
+    line-height: 1.2em;
+}
+
+
+
+/* 财务报表结束 */
+
+
+/* 营业执照开始 */
+
+#busLis .sub-tab,
+#batch .sub-tab {
+    padding: 0;
+    max-width: 600px;
+    margin-bottom: 20px;
+    /* height: 47px; */
+    line-height: 45px;
+    border: 1px solid #2277DA;
+    border-radius: 6px;
+    color: #2277DA;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.sub-tab.disabled {
+    opacity: .5;
+}
+
+#busLis .sub-tab>div,
+#batch .sub-tab>div {
+    border-left: 1px solid #2277DA;
+}
+
+#busLis .sub-tab>div:first-child,
+#batch .sub-tab>div:first-child,
+#idCard .sub-tab>div:first-child {
+    border-left: none;
+}
+
+#busLis .sub-tab>div.active,
+#batch .sub-tab>div.active,
+#idCard .sub-tab>div.active {
+    background: #2277DA;
+    color: #fff;
+}
+
+
+
+
+/* 营业执照结束 */
+
+
+/* 功能演示结束 */
+
+
+/* 应用场景开始 */
+
+.scenes {
+    background: url('../images/demo/yycj.png') no-repeat center center;
+    color: #FFF;
+    background-size: cover;
+}
+
+.scenes .container>div {
+    padding: 0;
+}
+
+.scenes h3 {
+    margin: 50px auto 60px auto;
+    color: #FFF;
+}
+
+.scenes .wrapper {
+    max-width: 360px;
+    margin-bottom: 40px;
+}
+
+.scenes .wrapper.pull-left {
+    margin-left: 45px;
+}
+
+.scenes .wrapper.pull-right {
+    margin-right: 45px;
+}
+
+.scenes .wrapper h4 {
+    font-size: 18px;
+    line-height: 30px;
+}
+
+.scenes .wrapper p {
+    font-size: 14px;
+    line-height: 20px;
+}
+
+
+
+
+/* 应用场景结束 */
+
+
+/* 技术特色开始 */
+
+.feature h3 {
+    margin: 40px auto 50px auto;
+}
+
+.feature ul {
+    margin-bottom: 70px;
+}
+
+.feature ul li {
+    padding: 0;
+}
+
+.feature ul li .wrapper {
+    margin: 10px;
+    padding: 20px;
+    border: 1px solid #CCC;
+}
+
+.feature ul li .wrapper .media-left {
+    /* padding-right: 20px; */
+}
+
+.feature ul li .wrapper .media-body h4 {
+    font-size: 20px;
+    margin-bottom: 16px;
+}
+
+.feature ul li .wrapper .media-body p {
+    font-size: 14px;
+    line-height: 20px;
+    color: #999;
+}
+
+
+
+
+/* 技术特色结束 */
+
+
+/* 批量识别开始 */
+
+#batch .thumb-item {
+    position: relative;
+}
+
+#batch .thumb-mask {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(255, 255, 255, .7);
+    color: #2277DA;
+    font-size: 2em;
+    line-height: 1.5;
+    text-align: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -ms-flex-line-pack: center;
+        align-content: center;
+}
+
+#batch .thumb-mask span {
+    display: block;
+    width: 100%;
+}
+
+#batch .main-img {
+    display: block;
+    position: relative;
+}
+
+#batch .main-img .loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+#batch .main-img .main-mask {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(255, 255, 255, .7);
+}
+
+#batch .main-img .add-item.ng-scope,
+#batch .main-img .sub-thumbs {
+    position: relative;
+    width: 50%;
+    height: 50%;
+    float: left;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    border: 1px solid #ccc;
+}
+
+#batch .main-img .add-item.ng-scope {
+    padding: 0;
+    margin: 0;
+    font-size: 3em;
+    color: #666;
+    cursor: pointer;
+}
+
+#batch .main-img .sub-thumbs.active {
+    border-color: #2277DA;
+    background-color: #2277DA;
+}
+
+#batch .main-img .sub-thumbs .index-num,
+#batch .main-img .full-view .index-num {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1.5em;
+    height: 2em;
+    line-height: 2em;
+    text-align: center;
+    background: rgba(0, 0, 0, .5);
+    color: #fff;
+}
+
+#batch .main-img .sub-thumbs span.zoom-in,
+#batch .main-img .sub-thumbs span.remove {
+    position: absolute;
+    right: 10px;
+    display: none;
+    cursor: pointer;
+}
+
+#batch .main-img .sub-thumbs.active span.zoom-in,
+#batch .main-img .sub-thumbs.active span.remove {
+    display: block;
+}
+
+#batch .main-img .sub-thumbs span.zoom-in i.fa,
+#batch .main-img .sub-thumbs span.remove i.fa {
+    background: rgba(0, 0, 0, .5);
+    padding: 8px;
+    color: #fff;
+    border-radius: 50%;
+}
+
+#batch .main-img .sub-thumbs span.zoom-in {
+    bottom: 10px;
+}
+
+#batch .main-img .sub-thumbs span.remove {
+    bottom: 48px;
+}
+
+#batch .main-img .full-view {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -ms-align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+
+#batch .main-img .full-view .zoom-out,
+#batch .main-img .full-view .view-remove {
+    position: absolute;
+    right: 16px;
+    background: rgba(0, 0, 0, .5);
+    color: #fff;
+    font-size: 16px;
+    padding: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#batch .main-img .full-view .zoom-out {
+    bottom: 16px;
+}
+
+#batch .main-img .full-view .view-remove {
+    bottom: 72px;
+}
+
+#batch .main-img .failed {
+    position: absolute;
+}
+
+#batch .result table {
+    white-space: nowrap;
+}
+
+#batch .result .loading-placeholder {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    font-size: 2em;
+    background-color: #efefef;
+    color: #999;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+
+
+/* 批量识别结束 */
+
+/* 全文识别开始 */
+
+#fullText .result pre {
+    background-color: initial;
+    border: none;
+    white-space: pre-wrap;
+}
+
+/* 全文识别结束 */
+
+/* 静默活体开始 */
+
+#silentLive .main-img {
+    overflow: hidden;
+}
+
+/* 相机组件开始 */
+
+.camera-view {
+    position: relative;
+}
+
+.camera-view .capture {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, .5);
+    cursor: pointer;
+}
+
+.camera-view .capture i {
+    color: #fff;
+    font-size: 24px;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    line-height: 64px;
+}
+
+.camera-view .flash-light {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    -webkit-animation: cheese .3s;
+            animation: cheese .3s;
+    display: none;
+}
+
+@-webkit-keyframes cheese {
+    from {
+        opacity: 1;
+    } 
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes cheese {
+    from {
+        opacity: 1;
+    } 
+    to {
+        opacity: 0;
+    }
+}
+
+/* 相机组件结束 */
+
+/* 静默活体结束 */
